@@ -115,14 +115,14 @@ class MyPromise {
     // 如果所有Promise都成功，则返回成功结果数组
     // 如果有一个Promise失败，则返回这个失败结果
     static all(promises) {
+        const isIterable = promises != null && typeof promises[Symbol.iterator] === 'function';
+        if (!isIterable) {
+            throw new TypeError(`${promises} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+        }
         const result = [];
         let count = 0;
         return new MyPromise((resolve, reject) => {
-            try {
-                if (!Array.isArray(promises)) {
-                    throw new Error('all 方法参数必须为数组')
-                }
-
+            try {                
                 const addData = (index, value) => {
                     result[index] = value;
                     count++;
@@ -146,7 +146,12 @@ class MyPromise {
 
     // 接收一个 Promise 数组，数组中如有非 Promise 项，则此项当做成功
     // 哪个 Promise 最快得到结果，就返回那个结果，无论成功失败
-    static race(promises) {
+    static race(promises) {        
+        const isIterable = promises != null && typeof promises[Symbol.iterator] === 'function';
+        if (!isIterable) {
+            throw new TypeError(`${promises} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+        }
+
         return new MyPromise((resolve, reject) => {
             promises.forEach(promise => {
                 if (promise instanceof MyPromise) {
@@ -164,7 +169,12 @@ class MyPromise {
 
     // 接收一个 Promise 数组， 数组中如有非 Promise 项， 则此项当做成功
     // 把每一个 Promise 的结果集合成数组返回
-    static allSettled(promises) {
+    static allSettled(promises) {        
+        const isIterable = promises != null && typeof promises[Symbol.iterator] === 'function';
+        if (!isIterable) {
+            throw new TypeError(`${promises} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+        }
+
         return new MyPromise((resolve, reject) => {
             const result = [];
             let count = 0;
@@ -194,7 +204,12 @@ class MyPromise {
     // 接收一个 Promise 数组，数组中如果有非 Promise 项，则此项当做成功
     // 如果有一个 Promise 成功， 则返回这个成功结果
     // 如果所有 Promise 都失败，则报错
-    static any(promises) {
+    static any(promises) {        
+        const isIterable = promises != null && typeof promises[Symbol.iterator] === 'function';
+        if (!isIterable) {
+            throw new TypeError(`${promises} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+        }
+
         return new MyPromise((resolve, reject) => {
             let count = 0;
             promises.forEach((promise) => {

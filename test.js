@@ -10,12 +10,12 @@ const { MyPromise } = require('./index.js');
 
 // console.log('P => ', p);
 
-const p1 = MyPromise.reject(3);
-const p2 = 42;
-const p3 = new MyPromise((resolve, reject) => {
-    setTimeout(resolve, 100, 'foo')
-})
+// const p1 = MyPromise.reject(3);
+// const p2 = 42;
+// const p3 = new MyPromise((resolve, reject) => {
+//     setTimeout(resolve, 100, 'foo')
+// })
 
-MyPromise.allSettled([p1, p2, p3]).then((res) => {
+MyPromise.allSettled().then((res) => {
     console.log(res)
 }, err => { console.log(err) })
